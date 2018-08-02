@@ -126,6 +126,8 @@ class opt_parser(object):
     # Split multiple arguments into separate ones for easier processing
     @staticmethod
     def __split_joined_args(arg_to_split):
+        if arg_to_split == str():
+            return None
         if (arg_to_split[0].startswith("-")) and (
         arg_to_split[1:].isalpha()):
             arg_to_split = [i for i in arg_to_split]

@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="easyparse",
-    version="1.0.3",
+    version="1.0.4",
     author="Sh3llcod3",
     author_email="no-reply@gmail.co.uk",
     description="A user-friendly, lightweight command-line argument parser.",

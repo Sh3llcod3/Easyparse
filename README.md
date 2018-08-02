@@ -12,8 +12,8 @@ simplicity over complexity or advanced features.
 ## Installing
 
 Using Easyparse is extremely simple. Start by installing the module using pip.
-`pip install easyparse`
-Alternatively, you could also clone it from GitHub itself.
+`python3 -m pip install easyparse`
+Alternatively, you could also clone it from GitHub, then build your own pip3 package.
 
 ## Initialising
 
