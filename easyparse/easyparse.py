@@ -1,31 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#   easyparse.py - Simple and lightweight commandline argument parser.
-#    Copyright (C) 2018 Yudhajit N. (Sh3llcod3)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#   You should have received a copy of the GNU General Public License
-#   along with this program. If not, see <http://www.gnu.org/licenses/>
-#   Contact: Please create a issue on my GitHub <https://github.com/Sh3llcod3>
-#   Please note: This was written purely with simplicity in mind.
-#   For a better, far more comprehensive module, use argparse.
-#
-# Lets import our necessary module.
+
 try:
     import sys
     from .terminal_colors import colors
 except(ImportError, ModuleNotFoundError) as failed_import:
-    print("easyparse: {}".format(failed_import))
+    print(f"easyparse: {failed_import}")
     raise SystemExit(1)
+
 
 # Arguments can be read from sys.argv (default) or any other list.
 # Support may be added to parse arguments from a dictionary.
@@ -60,15 +42,14 @@ class opt_parser(object):
         # Dictionary structure is as follows:
         # { argument : [present, needs_value, value]}
         for i in refined_list:
-            self.argument_dict.update({ i : [self.is_present(i), self.__needs_value(i), self.value_of(i)]})
+            self.argument_dict.update({i: [self.is_present(i), self.__needs_value(i), self.value_of(i)]})
 
         # Check for invalid arguments
         self.__check_invalid()
 
     # Add a custom argument.
     def add_arg(self, short_form, long_form=None, meta_var=None, description=None, optional=False):
-        argument_to_append = \
-        [
+        argument_to_append = [
             short_form,
             long_form,
             meta_var,
@@ -76,30 +57,26 @@ class opt_parser(object):
             optional
         ]
         for sublist in self.option_list:
-            if (argument_to_append == sublist[:2]) or (
-                argument_to_append[0] == sublist[0]) or (
-                argument_to_append[1] == sublist[1]):
+            match_prev_arg = [
+                argument_to_append == sublist[:2],
+                argument_to_append[0] == sublist[0],
+                argument_to_append[1] == sublist[1]
+            ]
+            if max(match_prev_arg):
                 return False
 
         # Check if short hand arg is in correct format
         if not self.__check_format(argument_to_append[0]):
-            self.__show_error("Argument error: '{}'"
-            " is in invalid format.".format(argument_to_append[0]),
-            "Easyparse")
-            self.__show_error("Short arguments"
-            " follow this pattern: '-{letter}', e.g. '-s' ",
-            "Easyparse")
+            self.__show_error(f"Argument error: '{argument_to_append[0]}' is in invalid format.", "Easyparse")
+            self.__show_error("Short arguments follow this pattern: '-{letter}', e.g. '-s' ", "Easyparse")
             self.__quit_program(1)
 
         # Check if long form args is in correct format
         if argument_to_append[1] is not None:
             if not self.__check_format(argument_to_append[1], short_form=False):
-                self.__show_error("Argument error: '{}'"
-                " is in invalid format.".format(argument_to_append[1]),
-                "Easyparse")
-                self.__show_error("Long arguments"
-                " follow this pattern: '--{full-word}', e.g. '--full-name' ",
-                "Easyparse")
+                self.__show_error(f"Argument error: '{argument_to_append[1]}' is in invalid format.", "Easyparse")
+                self.__show_error("Long arguments follow this pattern: '--{full-word}', e.g. '--full-name' ",
+                                  "Easyparse")
                 self.__quit_program(1)
 
         self.option_list.append(argument_to_append)
@@ -111,7 +88,7 @@ class opt_parser(object):
             name_to_prepend = self.filename
         self.yellow.print_status(
             "!",
-            "{}: {}".format(name_to_prepend, error_msg)
+            f"{name_to_prepend}: {error_msg}"
             )
 
     # Check if argument needs a passed value
@@ -128,8 +105,7 @@ class opt_parser(object):
     def __split_joined_args(arg_to_split):
         if arg_to_split == str():
             return None
-        if (arg_to_split[0].startswith("-")) and (
-        arg_to_split[1:].isalpha()):
+        if arg_to_split[0].startswith("-") and arg_to_split[1:].isalpha():
             arg_to_split = [i for i in arg_to_split]
             del arg_to_split[0]
             split_arg_list = []
@@ -172,12 +148,11 @@ class opt_parser(object):
         # Find invalid arguments or missing values.
         for i in self.argument_dict.items():
             if i[0] not in ignore_values and all(_ is None for _ in i[1]):
-                self.__show_error("Invalid option: {}".format(i[0]))
+                self.__show_error(f"Invalid option: {i[0]}")
                 self.__quit_program(1)
-            elif i[1][1] == True and (i[1][2] == False or i[1][2] is None):
-                self.__show_error("Option: '{}' missing value".format(i[0]))
+            elif i[1][1] is True and (i[1][2] is False or i[1][2] is None):
+                self.__show_error(f"Option: '{i[0]}' missing value")
                 self.__quit_program(1)
-
 
     # Clean the argument list. Remove duplicated args, and return the list.
     def __clean_passed_args(self):
@@ -213,9 +188,7 @@ class opt_parser(object):
         try:
             present_list = []
             for i in args_to_check:
-                present_list.append(
-                self.is_present(i)
-                )
+                present_list.append(self.is_present(i))
             if sep:
                 return present_list
             else:
@@ -259,7 +232,7 @@ class opt_parser(object):
     def view_args(self):
         for i in self.option_list:
             self.green.print_success(i[0] + ":")
-            print(self.blue.return_color("\tLong form") + "   : " +  str(i[1]))
+            print(self.blue.return_color("\tLong form") + "   : " + str(i[1]))
             print(self.blue.return_color("\tMeta var") + "    : " + str(i[2]))
             print(self.blue.return_color("\tDescription") + " : " + str(i[3]))
             print(self.blue.return_color("\tOptional") + "    : " + str(i[4]))
@@ -301,10 +274,7 @@ class opt_parser(object):
         if prepend_name is None:
             prepend_name = self.filename
         if usage_example not in self.example_list:
-            self.example_list.append("     {0} {1}".format(
-            prepend_name,
-            usage_example
-            ))
+            self.example_list.append(f"     {prepend_name} {usage_example}")
 
     # Display arguments in a manpage-like format.
     def __print_argline(self, argument_array, append_space=False):
@@ -313,20 +283,15 @@ class opt_parser(object):
         long_str = argument_array[1]
         if long_str is None:
             long_str = str()
-        meta_type =  argument_array[2]
+        meta_type = argument_array[2]
         if meta_type is None:
             meta_type = str()
 
         # Print the argument
-        print("       {}{} {}{} {}{}{}".format(
-            self.deep_end.color_code,
-            argument_array[0],
-            long_str,
-            self.end.color_code,
-            self.underline.color_code,
-            meta_type,
-            self.end.color_code
-        ))
+        print(f"       {self.deep_end.color_code}{argument_array[0]} "
+              f"{long_str}{self.end.color_code} {self.underline.color_code}"
+              f"{meta_type}{self.end.color_code}"
+              )
         print("              " + str(argument_array[3]))
         if append_space:
             print()
@@ -335,19 +300,17 @@ class opt_parser(object):
     def show_help(self, add_space=False):
 
         # Print the header
-        self.green.print_success("Usage: {} [options]\n".format(
-            self.red.return_color(self.filename)
-        ))
+        self.green.print_success(f"Usage: {self.red.return_color(self.filename)} [options]\n")
 
         # If any examples were added, print them.
         if hasattr(self, 'example_list'):
-            self.green.print_status("i","Examples:\n")
+            self.green.print_status("i", "Examples:\n")
             for each_example in self.example_list:
                 print(each_example + "\n")
 
         # Print any standard positional arguments
         if False in [i[4] for i in self.option_list]:
-            self.green.print_status("i","Positional arguments:\n")
+            self.green.print_status("i", "Positional arguments:\n")
             for argument in self.option_list:
                 if not argument[4]:
                     self.__print_argline(argument, add_space)
@@ -356,7 +319,7 @@ class opt_parser(object):
 
         # Print any optional arguments
         if True in [i[4] for i in self.option_list]:
-            self.green.print_status("i","Optional arguments:\n")
+            self.green.print_status("i", "Optional arguments:\n")
             for argument in self.option_list:
                 if argument[4]:
                     self.__print_argline(argument, add_space)
@@ -365,9 +328,9 @@ class opt_parser(object):
 
         # If there are comments, print them here.
         if hasattr(self, 'comment_list'):
-            self.green.print_status("i","Comments:\n")
+            self.green.print_status("i", "Comments:\n")
             for comment in self.comment_list:
-                print("     {}".format(comment))
+                print(f"     {comment}")
             print()
 
     # Add the colors to display statuses
