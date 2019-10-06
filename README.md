@@ -1,19 +1,20 @@
 # Easyparse
 
 Easyparse is a command line argument parser. It is extremely lightweight.
-It has no external dependencies, and is less than 500 lines.
-Easyparse can not only handle the argument parsing in your programs,
-but it can also handle displaying help screens and error-handling.
-It's arguably easier to use than other argument parsers, as it favours
-simplicity over complexity or advanced features.
+It has no external dependencies. Easyparse can not only handle the argument
+parsing in your programs, but it can also handle displaying basic help screens
+and error-handling. It's significantly easier to use than other argument parsers,
+as it favours simplicity over complexity or advanced features.
 
-# Usage
+## Setup & Prerequsites
 
-## Installing
+- `python 3.6` or above
+- `pip`
 
-Using Easyparse is extremely simple. Start by installing the module using pip.
-`python3 -m pip install easyparse`
-Alternatively, you could also clone it from GitHub, then build your own pip3 package.
+Start by installing the module using pip.
+```shell
+$ python3 -m pip install easyparse
+```
 
 ## Initialising
 
@@ -275,7 +276,11 @@ parser.add_arg("-c", "--ciphertext", "ciphertext", description="lorem ipsum dolo
 parser.add_arg("-k", "--key", "key", "lorem ipsum dolor")
 
 if len(sys.argv) == 1 or parser.is_present("-h"):
-  parser.show_help()
+  # Change to True to add a space between each argument
+  parser.show_help(add_space=False)
+
+  # An alternate help screen can also be viewed.
+  parser.view_args()
 
 ```
 
@@ -315,16 +320,15 @@ later.
 
 ## Error handling
 
-There isn't any code to demonstrate here,
-but Easyparse should be able to catch these types
+Easyparse should be able to catch these types
 of common errors, regardless of whether the long
 or short form has been supplied, or different forms
 have been mixed:
 
-[x] Duplicate arguments
-[x] Invalid arguments
-[x] No values passed where required
-[x] Invalid argument type
+- Duplicate arguments
+- Invalid arguments
+- No values passed where required
+- Invalid argument type
 
 Let's see a few cases of these.
 
@@ -376,17 +380,9 @@ if len(sys.argv) == 1 or parser.is_present("--help"):
 ## Conclusion
 
 I would like to thank you for taking the time to read
-this documentation, even though it's just a simple
-markdown README. I hope this has been able to demonstrate
-the functions and features of Easyparse. If you have any questions at all,
-please create an issue on the GitHub page, and I will try my
-best to answer your question, as long as its relevant to
-Easyparse and its usage/features.
+this documentation, I hope someone finds this basic project useful.
+If you have any questions at all, please create an issue.
 
-Easyparse is just one of my 'weekend projects'.
-You can view my other projects at my GitHub page,
-where I have built a Wireless network auditing
-script called [Airscript-ng](https://github.com/Sh3llcod3/Airscript-ng) with quite a few built-in tools,
-and an encryption algorithm I created for fun called [Memecrypt](https://github.com/Sh3llcod3/Memecrypt).
+You can view my other projects at my [GitHub page](https://github.com/Sh3llcod3/).
 
 [GitHub Link](https://github.com/sh3llcod3/Easyparse)
