@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "easyparse"
-version = "1.0.6"
+version = "1.0.7"
 description = "A user-friendly, lightweight command-line argument parser."
 authors = ["Yudhajit N <28938427+Sh3llcod3@users.noreply.github.com>"]
 license = "MIT"
