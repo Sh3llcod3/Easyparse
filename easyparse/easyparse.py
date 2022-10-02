@@ -4,7 +4,7 @@
 try:
     import sys
     from .terminal_colors import colors
-except(ImportError, ModuleNotFoundError) as failed_import:
+except ImportError as failed_import:
     print(f"easyparse: {failed_import}")
     raise SystemExit(1)
 
@@ -193,7 +193,7 @@ class opt_parser(object):
                 return present_list
             else:
                 return min(present_list)
-        except(TypeError):
+        except TypeError:
             return False
 
     # Search the option list for a particular value and get the x,y postion.
@@ -216,7 +216,7 @@ class opt_parser(object):
                 item_after = self.argument_list[get_index + 1]
                 if not self.__is_arg(item_after):
                     return item_after
-            except(IndexError):
+            except IndexError:
                 return None
 
     # Return the alternate argument
@@ -257,7 +257,7 @@ class opt_parser(object):
                 if arg_value[:2] == "--" and long_str_valid:
                     return True
             return False
-        except(IndexError, ValueError):
+        except (IndexError, ValueError):
             return False
 
     # Add optional comments for the help screen.

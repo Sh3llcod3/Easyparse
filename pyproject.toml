@@ -1,15 +1,15 @@
 [tool.poetry]
 name = "easyparse"
-version = "1.0.7"
+version = "1.0.9"
 description = "A user-friendly, lightweight command-line argument parser."
-authors = ["Yudhajit N <28938427+Sh3llcod3@users.noreply.github.com>"]
+authors = ["YN <28938427+Sh3llcod3@users.noreply.github.com>"]
 license = "MIT"
 readme = 'README.md'
 repository = "https://github.com/Sh3llcod3/Easyparse"
 homepage = "https://github.com/Sh3llcod3/Easyparse"
 
 classifiers = [
-  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
   "License :: OSI Approved :: MIT License",
   "Environment :: Console",
   "Operating System :: POSIX :: Linux"
@@ -20,11 +20,11 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
+flake8 = "*"
 
 [tool.poetry.dev-dependencies]
 flake8 = "*"
-flake8-bandit = "*"
 flake8-bugbear = "*"
 flake8-import-order = "*"
 flake8-string-format = "*"
