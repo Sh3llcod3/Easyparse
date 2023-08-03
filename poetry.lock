@@ -52,7 +52,7 @@ dev = ["Sphinx (==4.3.2)", "black (==22.3.0)", "build (==0.8.0)", "flake8 (==4.0
 
 [[package]]
 name = "certifi"
-version = "2022.9.24"
+version = "2022.12.7"
 description = "Python package for providing Mozilla's CA Bundle."
 category = "dev"
 optional = false
@@ -921,3 +921,4 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 lock-version = "2.0"
 python-versions = "^3.7"
 content-hash = "76e1b8cec5ca2b2e661796c383b4231954b0adf56535ae0aaee099c622df6fc5"
+
